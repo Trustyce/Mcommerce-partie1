@@ -69,8 +69,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> trierProduitsParOrdreAlphabetique() {
-        return productDao.findAllByOrderByNom();
+    public MappingJacksonValue trierProduitsParOrdreAlphabetique() {
+        MappingJacksonValue produitsFiltres = new MappingJacksonValue(productDao.findAllByOrderByNom());
+        produitsFiltres.setFilters(new SimpleFilterProvider().addFilter("monFiltreDynamique", SimpleBeanPropertyFilter.serializeAllExcept()));
+        return produitsFiltres;
     }
 
     //Pour les tests
